@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace WpfApp
+namespace SaftLive
 {
     public partial class MainWindow : Window
     {
@@ -33,10 +33,10 @@ namespace WpfApp
                     {
                         while (reader.Read())
                         {
-                            var messageId = reader.GetInt32(0);
+                            mru = reader.GetInt32(0);
                             var value = reader.GetString(1);
-                            mru = messageId;
-                            lbMessages.Items.Add(value);
+                            var output = DateTime.Now.ToShortTimeString() + " " + value;
+                            lbMessages.Items.Add(output);
                         }
                     }
                 }
