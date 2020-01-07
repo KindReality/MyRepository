@@ -1,0 +1,41 @@
+using System.Windows;
+using System.Windows.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Data;
+
+namespace MyWpfApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void tbUnitPricetbQuantity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            decimal unitPrice;
+            decimal quantity;
+            decimal total;
+            if (!decimal.TryParse(tbUnitPrice.Text, out unitPrice))
+            {
+                Display("Unit Price is not a decimal");
+            }
+            if (!decimal.TryParse(tbQuantity.Text, out quantity))
+            {
+                Display("Quantity is not a decimal");
+            }
+            total = unitPrice * quantity;
+            Display(total);
+        }
+
+        private void Display(object obj)
+        {
+            sbiOutput.Content = obj.ToString();
+        }
+    }
+}

@@ -8,10 +8,13 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Label Content="Unit Price" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-        <TextBox x:Name="tbUnitPrice" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="100,14,0,0"/>
+        <TextBox x:Name="tbUnitPrice" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="100,14,0,0" TextChanged="tbUnitPricetbQuantity_TextChanged"/>
         <Label Content="Quantity" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,38,0,0"/>
-        <TextBox x:Name="tbQuantity" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="100,42,0,0"/>
+        <TextBox x:Name="tbQuantity" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="100,42,0,0" TextChanged="tbUnitPricetbQuantity_TextChanged"/>
         <Label Content="Total" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,66,0,0"/>
         <TextBox x:Name="tbTotal" IsReadOnly="True" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="100,70,0,0"/>
+        <StatusBar VerticalAlignment="Bottom">
+            <StatusBarItem x:Name="sbiOutput"></StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>
