@@ -1,0 +1,25 @@
+public static decimal? GetDecimal(string prompt)
+    {
+        decimal? result = null;
+        decimal maxCount = 3;
+        decimal count = 0;
+        string s;
+        decimal i;
+        do
+        {
+            Console.Write(prompt);
+            Console.Write(" ");
+            s = Console.ReadLine();
+            if (decimal.TryParse(s, out i))
+            {
+                result = i;
+            }
+            else
+            {
+                result = null;
+            }
+            ++count;
+        }
+        while (result == null && count < maxCount);
+        return result;
+    }

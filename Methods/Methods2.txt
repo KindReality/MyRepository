@@ -1,0 +1,10 @@
+class Program
+{
+    static void Main()
+    {
+	string prompt = "greetings!";
+        //2 call the GreetUser method
+    }
+
+    //1 define a method named GreetUser 
+}

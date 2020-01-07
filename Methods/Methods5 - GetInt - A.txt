@@ -1,0 +1,16 @@
+    public static int? GetInt(string prompt)
+    {
+        string s;
+        int i;
+        Console.Write(prompt);
+        Console.Write(" ");
+        s = Console.ReadLine();
+        if (int.TryParse(s, out i))
+        {
+            return i; 
+        }
+        else
+        {
+            return null;
+        }
+    }

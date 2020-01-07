@@ -1,0 +1,13 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string name = "Michael";
+        DateTime dob = new DateTime(2019, 1, 6);
+        //2 call the GreetUser method
+    }
+
+    //1 define a method named GreetUser
+}

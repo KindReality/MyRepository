@@ -44,3 +44,22 @@ namespace SaftLive
         }
     }
 }
+
+
+
+
+public class MyUtilities
+{
+    public static void Display(object value)
+    {
+        using (var connection = new SqlConnection("server=saftsqlserver.database.windows.net;database=mysqldatabase;user id=student;password=Pa$$w0rd"))
+        {
+            connection.Open();
+            using (var command = new SqlCommand("insert messages (value) values (@value)", connection))
+            {
+                command.Parameters.AddWithValue("@value", value);
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+}
