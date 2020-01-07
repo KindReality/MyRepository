@@ -1,0 +1,20 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string prompt = "please enter unit price";
+        decimal? unitPrice;
+        prompt = "please enter quantity";
+        int? quantity;
+        decimal total;
+        //1 call the GetDecimal and GetInt method to initialize unitPrice and Quantity
+        //2 validate unitPrice and Quantity are not null
+        //4 call the CalculateTotal method. 
+        //5 display total
+    }
+
+    //3 define a method named CalculateTotal 
+
+}
