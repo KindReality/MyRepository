@@ -1,0 +1,34 @@
+﻿<Window x:Class="WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp"
+        mc:Ignorable="d"
+        Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" >
+            <Label Content="Message" VerticalContentAlignment="Center" Margin="5" />
+            <TextBox x:Name="tbMessage" Width="200" VerticalContentAlignment="Center" Margin="5" />
+            <Button x:Name="bAdd" Content="Add" Width="75" Margin="5" Click="bAdd_Click" />
+            <Button x:Name="bDelete" Content="Delete" Width="75" Margin="5" Click="bDelete_Click" IsEnabled="False" />
+        </StackPanel>
+        <ListBox x:Name="lbMessages" Grid.Row="2" SelectionChanged="lbMessages_SelectionChanged" MouseDoubleClick="lbMessages_MouseDoubleClick">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=MessageID, StringFormat=t}"/>
+                        <TextBlock Text=" "/>
+                        <TextBlock Text="{Binding Path=CreatedOn, StringFormat=t}"/>
+                        <TextBlock Text=" "/>
+                        <TextBlock Text="{Binding Path=Value}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
