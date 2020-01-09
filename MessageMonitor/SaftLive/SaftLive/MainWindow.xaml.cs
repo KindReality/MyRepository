@@ -26,7 +26,7 @@ namespace SaftLive
             using (var connection = new SqlConnection("server=saftsqlserver.database.windows.net;database=mysqldatabase;user id=student;password=Pa$$w0rd"))
             {
                 connection.Open();
-                using (var command = new SqlCommand("select messageid, value from messages where messageid > @mru order by messageid", connection))
+                using (var command = new SqlCommand("select messageid, value from messages where messageid > @mru order by messageid desc", connection))
                 {
                     command.Parameters.AddWithValue("@mru", mru);
                     using (var reader = command.ExecuteReader())

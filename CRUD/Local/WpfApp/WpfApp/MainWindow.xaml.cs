@@ -102,6 +102,7 @@ namespace WpfApp
             tbMessage.Text = "";
             _retrieve();
         }
+
         private void _retrieve()
         {
             var result = Retrieve();
