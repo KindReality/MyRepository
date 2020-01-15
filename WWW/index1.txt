@@ -1,0 +1,13 @@
+<form method="post">
+    <div class="form-group row">
+        <label for="iEmail" class="col-3">Email</label>
+        <input id="iEmail" name="iEmail" class="form-control col-9" />
+    </div>
+    <div class="form-group row">
+        <label for="iName" class="col-3">Name</label>
+        <input id="iName" name="iName" class="form-control col-9" />
+    </div>
+    <div class="form-group row">
+        <button class="btn btn-block btn-primary">Submit</button>
+    </div>
+</form>
