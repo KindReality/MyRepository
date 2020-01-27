@@ -1,0 +1,16 @@
+		            if (ModelState.IsValid)
+		            {
+		                if (fileInputData.Count > 1) 
+		                {
+		                    ModelState.AddModelError("PhotoData", "Please upload only one file.");
+		                }
+		                var formFile = fileInputData[0];
+		                var readStream = formFile.OpenReadStream();
+		                photo.PhotoData = new byte[formFile.Length];
+		                readStream.Read(photo.PhotoData, 0, (int)formFile.Length);
+		                photo.MimeType = formFile.ContentType;
+		                _context.Add(photo);
+		                await _context.SaveChangesAsync();
+		                return RedirectToAction(nameof(Index));
+		            }
+		            return View(photo);
