@@ -1,0 +1,369 @@
+Before inherit
+class Program
+{
+    static void Main(string[] args)
+    {
+            var s = new Square();
+            var c = new Circle();
+            s.Price = 1.5m;
+            s.Length = 10;
+            s.Width = 15;
+            c.Price = 1.5m;
+            c.Radius = 5;
+            PrintDescription(s);
+            PrintDescription(c);
+    }
+    private static void PrintDescription(Square s)
+    {
+        Console.WriteLine(s.GetDescription());
+    }
+    private static void PrintDescription(Circle c)
+    {
+        Console.WriteLine(c.GetDescription());
+    }
+}
+
+public class Square
+{
+    public decimal Length { get; set; }
+    public decimal Width { get; set; }
+    public decimal Price { get; set; }
+    public decimal GetTotalSquareFeet()
+    {
+        return Length * Width;
+    }
+    public decimal GetTotal()
+    {
+        return Price * GetTotalSquareFeet();
+    }
+    public string GetDescription()
+    {
+        return "a square - sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+public class Circle
+{
+    public decimal Radius { get; set; }
+    public decimal Price { get; set; }
+    public decimal GetTotalSquareFeet()
+    {
+        return (decimal)(Math.Pow((double)Radius, 2) * Math.PI);
+    }
+    public decimal GetTotal()
+    {
+        return Price * GetTotalSquareFeet();
+    }
+    public string GetDescription()
+    {
+        return "a circle - sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+Inherit 
+public class Shape
+{
+    public decimal Price { get; set; }
+}
+
+public class Square : Shape
+{
+    public decimal Length { get; set; }
+    public decimal Width { get; set; }
+    public decimal GetTotalSquareFeet()
+    {
+        return Length * Width;
+    }
+    public decimal GetTotal()
+    {
+        return Price * GetTotalSquareFeet();
+    }
+    public string GetDescription()
+    {
+        return "a square - sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+public class Circle : Shape
+{
+    public decimal Radius { get; set; }
+    public decimal GetTotalSquareFeet()
+    {
+        return (decimal)(Math.Pow((double)Radius, 2) * Math.PI);
+    }
+    public decimal GetTotal()
+    {
+        return Price * GetTotalSquareFeet();
+    }
+    public string GetDescription()
+    {
+        return "a circle - sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+Inherit isn't good enough 
+public class Shape
+{
+    public decimal Price { get; set; }
+    public virtual decimal GetTotalSquareFeet()
+    {
+        //return Length * Width;
+        //
+        //return (decimal)(Math.Pow((double)Radius, 2) * Math.PI);
+        throw new NotImplementedException();
+    }
+    public decimal GetTotal()
+    {
+        return Price * GetTotalSquareFeet();
+    }
+}
+
+public class Square : Shape
+{
+    public decimal Length { get; set; }
+    public decimal Width { get; set; }
+    public override decimal GetTotalSquareFeet()
+    {
+        return Length * Width;
+    }
+    public string GetDescription()
+    {
+        return "a square - sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+public class Circle : Shape
+{
+    public decimal Radius { get; set; }
+    public override decimal GetTotalSquareFeet()
+    {
+        return (decimal)(Math.Pow((double)Radius, 2) * Math.PI);
+    }   
+    public string GetDescription()
+    {
+        return "a circle - sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+Abstract 
+Abstract - can't put get total in base without get total square feet
+public abstract class Shape
+{
+    public decimal Price { get; set; }
+    public abstract decimal GetTotalSquareFeet();
+    public decimal GetTotal()
+    {
+        return Price * GetTotalSquareFeet();
+    }
+}
+
+public class Square : Shape
+{
+    public decimal Length { get; set; }
+    public decimal Width { get; set; }
+    public override decimal GetTotalSquareFeet()
+    {
+        return Length * Width;
+    }
+    public string GetDescription()
+    {
+        return "a square - sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+public class Circle : Shape
+{
+    public decimal Radius { get; set; }
+    public override decimal GetTotalSquareFeet()
+    {
+        return (decimal)(Math.Pow((double)Radius, 2) * Math.PI);
+    }   
+    public string GetDescription()
+    {
+        return "a circle - sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+Virtual 
+public abstract class Shape
+{
+    public decimal Price { get; set; }
+    public abstract decimal GetTotalSquareFeet();
+    public decimal GetTotal()
+    {
+        return Price * GetTotalSquareFeet();
+    }
+    public virtual string GetDescription()
+    {
+        return "sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+public class Square : Shape
+{
+    public decimal Length { get; set; }
+    public decimal Width { get; set; }
+    public override decimal GetTotalSquareFeet()
+    {
+        return Length * Width;
+    }
+    public override string GetDescription()
+    {
+        return "a square - " + base.GetDescription();
+    }
+}
+
+public class Circle : Shape
+{
+    public decimal Radius { get; set; }
+    public override decimal GetTotalSquareFeet()
+    {
+        return (decimal)(Math.Pow((double)Radius, 2) * Math.PI);
+    }
+    public override string GetDescription()
+    {
+        return "a circle - " + base.GetDescription();
+    }
+}
+
+Sealed
+public abstract class Shape
+{
+    public decimal Price { get; set; }
+    public abstract decimal GetTotalSquareFeet();
+    public decimal GetTotal()
+    {
+        return Price * GetTotalSquareFeet();
+    }
+    public  virtual string GetDescription()
+    {
+        return "sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+}
+
+public sealed class Square : Shape
+{
+    public decimal Length { get; set; }
+    public decimal Width { get; set; }
+    public  sealed override decimal GetTotalSquareFeet()
+    {
+        return Length * Width;
+    }
+    public  sealed override string GetDescription()
+    {
+        return "a square - " + base.GetDescription();
+    }
+}
+
+public sealed class Circle : Shape
+{
+    public decimal Radius { get; set; }
+    public  sealed override decimal GetTotalSquareFeet()
+    {
+        return (decimal)(Math.Pow((double)Radius, 2) * Math.PI);
+    }
+    public  sealed override string GetDescription()
+    {
+        return "a circle - " + base.GetDescription();
+    }
+}
+
+
+Overloading 
+
+Polymorphism 
+public class Program
+{
+    public static void Main()
+    {
+        var s = new Square();
+        var c = new Circle();
+        s.Price = 1.5m;
+        s.Length = 10;
+        s.Width = 15;
+        c.Price = 1.5m;
+        c.Radius = 20;
+        PrintDescription(s);
+        PrintDescription(c);
+    }
+
+    private static void PrintDescription(Shape s)
+    {
+        Console.WriteLine(s.GetDescription());
+    }
+}
+
+Constructors 
+public class Program
+{
+    public static void Main()
+    {
+        var s = new Square(10, 15, 1.5m);
+        var c = new Circle(20, 1.5m);
+        PrintDescription(s);
+        PrintDescription(c);
+    }
+
+    private static void PrintDescription(Shape s)
+    {
+        Console.WriteLine(s.GetDescription());
+    }
+}
+
+public abstract class Shape
+{
+    public Shape(decimal price)
+    {
+        Price = price;
+    }
+    public decimal Price { get; set; }
+    public abstract decimal GetTotalSquareFeet();
+    public decimal GetTotal()
+    {
+        return Price * GetTotalSquareFeet();
+    }
+    public virtual string GetDescription()
+    {
+        return "sf:" + GetTotalSquareFeet().ToString("n") + " $ per sf:" + Price.ToString("c") + " total:" + GetTotal().ToString("c");
+    }
+
+}
+
+public class Square : Shape
+{
+    public Square(decimal length, decimal width, decimal price)
+        : base(price)
+    {
+        Length = length;
+        Width = width;
+    }
+    public decimal Length { get; set; }
+    public decimal Width { get; set; }
+    public override decimal GetTotalSquareFeet()
+    {
+        return Length * Width;
+    }
+    public override string GetDescription()
+    {
+        return "a square - " + base.GetDescription();
+    }
+}
+
+
+public class Circle : Shape
+{
+    public Circle(decimal radius, decimal price)
+        : base(price)
+    {
+        Radius = radius;
+    }
+    public decimal Radius { get; set; }
+    public override decimal GetTotalSquareFeet()
+    {
+        return (decimal)(Math.Pow((double)Radius, 2) * Math.PI);
+    }
+    public override string GetDescription()
+    {
+        return "a circle - " + base.GetDescription();
+    }
+}
