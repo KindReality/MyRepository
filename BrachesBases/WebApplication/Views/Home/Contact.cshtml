@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<h1>Contact</h1>
+
+<table>
+    <tr>
+        @foreach (var item in (List<IdentityUser>)ViewData["Users"])
+        {
+            <td>@item.UserName</td>
+            <td>@item.Email</td>
+        }
+    </tr>
+</table>
+
+
+
+<ul>
+@foreach (var item in (List<IdentityUser>)ViewData["Users"])
+{
+    <li>@item.UserName</li>
+}
+</ul>
