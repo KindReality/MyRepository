@@ -1,0 +1,29 @@
+﻿    latitude <span id="latitude"></span>
+    longitude <span id="longitude"></span>
+    accuracy <span id="accuracy"></span>
+    <div id="mapDiv"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJg3sNfgs_MqipdAqz0gu1djKSy7se9qw&sensor=false"></script>
+    <script>
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var accuracy = position.coords.accuracy;
+            document.getElementById('latitude').innerText = latitude;
+            document.getElementById('longitude').innerText = longitude;
+            document.getElementById('accuracy').innerText = accuracy;
+            var mapOptions = {
+                center: new google.maps.LatLng(latitude, longitude),
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.HYBRID,
+            };
+            var mapDiv = document.getElementById('mapDiv');
+            var map = new google.maps.Map(mapDiv, mapOptions);
+        }, function (error) {
+            var errorMessage = error.message;
+            var errorCode = error.code;
+            alert(errorCode + ' ' + errorMessage);
+        }, {
+            enableHighAccuracy: true,
+            timeout: 15000
+        });
+    </script>
