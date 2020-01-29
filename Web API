@@ -1,7 +1,3 @@
 Quickstart - Create a Web API
 This tutorial teaches the basics of building a web API with ASP.NET Core.
 https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-2.1&tabs=visual-studio
-
-Create a web API with ASP.NET Core
-Create a RESTful service with ASP.NET Core that supports Create, Read, Update, Delete (CRUD) operations.
-https://docs.microsoft.com/en-us/learn/modules/build-web-api-net-core/?view=aspnetcore-3.1
