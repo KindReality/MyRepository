@@ -22,7 +22,10 @@ namespace WebApplication.Controllers
         // GET: Bases
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Base.ToListAsync());
+            return View(await _context
+                .Base
+                .Include(x => x.Branch)
+                .ToListAsync());
         }
 
         // GET: Bases/Details/5
