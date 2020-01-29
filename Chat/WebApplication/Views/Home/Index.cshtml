@@ -1,0 +1,39 @@
+﻿
+<ul id="messages">
+</ul>
+<input id="text" />
+<button id="send">Send Message</button>
+
+@section Scripts{ 
+<script>
+    //execute code every second
+    setInterval(function () {
+
+        $.ajax({
+            url: '/api/messages',
+            type: 'get'
+        }).done(function (data) {
+            $('#messages').html('');
+            for (var i in data) {
+                $('#messages').append('<li>' + data[i].text + '</li>');
+            }
+        });
+    }, 1000);
+
+
+    //execute code when button is clicked
+    $('#send').click(function () {
+
+        $.ajax({
+            url: '/api/messages',
+            type: 'post',
+            data: JSON.stringify({ text: $('#text').val() }),
+            contentType: "application/json"
+        }).done(function () {
+
+        });
+
+    });
+
+</script>
+}
