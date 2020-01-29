@@ -46,6 +46,15 @@ namespace WebApplication.Controllers
         // GET: Bases/Create
         public IActionResult Create()
         {
+            var branches = _context
+                .Branches
+                .Select(x => 
+                    new SelectListItem(x.Name, x.BranchID.ToString())
+                    )
+                .ToList();
+
+            ViewBag.Branches = branches;
+
             return View();
         }
 
@@ -54,8 +63,17 @@ namespace WebApplication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BaseID,Name,Latitude,Longitude")] Base @base)
+        public async Task<IActionResult> Create([Bind("BaseID,Name,Latitude,Longitude")] Base @base, int branchID)
         {
+            //please use the branchid to find the branch object using the _context
+            var branch = _context
+                .Branches
+                .SingleOrDefault(x => x.BranchID == branchID);
+            //attached exising branch to the new base 
+            @base.Branch = branch;
+
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(@base);
