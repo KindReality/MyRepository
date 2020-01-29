@@ -1,7 +1,5 @@
 
 Microsoft Quickstart
-Description 
-In this 5-10 minute introduction to how to use Visual Studio, you'll create a simple "Hello World" web app by using an ASP.NET project template and the C# programming language.
 Create a project 
 https://docs.microsoft.com/en-us/visualstudio/ide/quickstart-aspnet-core?view=vs-2019
 add a controller 
