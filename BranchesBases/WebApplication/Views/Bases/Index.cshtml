@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WebApplication.Models.Base>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Branch
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Location
+            </th>           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Branch?.Name
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latitude)
+                ,
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BaseID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BaseID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BaseID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
