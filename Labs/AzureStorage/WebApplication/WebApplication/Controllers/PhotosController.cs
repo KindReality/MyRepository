@@ -54,7 +54,7 @@ namespace WebApplication.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("PhotoID,Title")] Photo photo, List<IFormFile> fileInputData)
+        public async Task<IActionResult> Create([Bind("PhotoID,Title,PhotoData,MimeType")] Photo photo, List<IFormFile> fileInputData)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace WebApplication.Controllers
                 photo.MimeType = formFile.ContentType;
                 _context.Add(photo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), new { id = photo.PhotoID });
+                return RedirectToAction(nameof(Index));
             }
             return View(photo);
         }
