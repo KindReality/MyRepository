@@ -9,7 +9,5 @@ namespace WebApplication.Models
     {
         public int PhotoID { get; set; }
         public string Title { get; set; }
-        public byte[] PhotoData { get; set; }
-        public string MimeType { get; set; }
     }
 }

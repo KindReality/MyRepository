@@ -11,23 +11,17 @@
     <h4>Photo</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Title)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhotoData)
+        <dt class="col-sm-2">
+            Photo
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhotoData)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MimeType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MimeType)
+        <dd class="col-sm-10">
+            <img style="object-fit:fill" src="@Url.Action("File", "Photos", new { id = Model.PhotoID })" />
         </dd>
     </dl>
     

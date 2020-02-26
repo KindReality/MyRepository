@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                <img src="@Url.Action("File", "Photos", new { id = item.PhotoID })" />
+                <img class="img-fluid" style="object-fit:fill" src="@Url.Action("File", "Photos", new { id = item.PhotoID })" />
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PhotoID">Edit</a> |

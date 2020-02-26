@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using WebApplication.Data;
 using WebApplication.Models;
 
@@ -20,13 +18,11 @@ namespace WebApplication.Controllers
             _context = context;
         }
 
-        // GET: Photos1
         public async Task<IActionResult> Index()
         {
             return View(await _context.Photos.ToListAsync());
         }
 
-        // GET: Photos1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,17 +40,13 @@ namespace WebApplication.Controllers
             return View(photo);
         }
 
-        // GET: Photos1/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Photos1/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("PhotoID,Title,PhotoData,MimeType")] Photo photo, List<IFormFile> fileInputData)
+        public async Task<IActionResult> Create([Bind("PhotoID,Title")] Photo photo, List<IFormFile> fileInputData)
         {
             if (ModelState.IsValid)
             {
@@ -64,12 +56,11 @@ namespace WebApplication.Controllers
                 }
                 var formFile = fileInputData[0];
                 var readStream = formFile.OpenReadStream();
-                photo.PhotoData = new byte[formFile.Length];
-                readStream.Read(photo.PhotoData, 0, (int)formFile.Length);
-                photo.MimeType = formFile.ContentType;
+                var photoData = new byte[formFile.Length];
                 _context.Add(photo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                StorageUtilties.UploadBlob("photos", photo.PhotoID.ToString(), photoData);
+                return RedirectToAction(nameof(Details), new { id = photo.PhotoID });
             }
             return View(photo);
         }
@@ -86,62 +77,10 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-            return File(photo.PhotoData, photo.MimeType);
+            var result = StorageUtilties.DownloadBlob("photos", photo.PhotoID.ToString());
+            return File(result.Blob, result.ContentType);
         }
 
-
-        // GET: Photos1/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var photo = await _context.Photos.FindAsync(id);
-            if (photo == null)
-            {
-                return NotFound();
-            }
-            return View(photo);
-        }
-
-        // POST: Photos1/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PhotoID,Title,PhotoData,MimeType")] Photo photo)
-        {
-            if (id != photo.PhotoID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(photo);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PhotoExists(photo.PhotoID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(photo);
-        }
-
-        // GET: Photos1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -159,7 +98,6 @@ namespace WebApplication.Controllers
             return View(photo);
         }
 
-        // POST: Photos1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
