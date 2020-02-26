@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Data
 {
-    public class StorageUtilties
+    public class StorageRepository
     {
         private static BlobServiceClient GetBlobServiceClient()
         {

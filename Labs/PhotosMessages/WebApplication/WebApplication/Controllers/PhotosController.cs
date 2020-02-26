@@ -20,7 +20,10 @@ namespace WebApplication.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Photos.ToListAsync());
+            return View(await _context
+                .Photos
+                .Where(x => x.Processed == true)
+                .ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -30,6 +33,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
             var photo = await _context.Photos
+                .Where(x => x.Processed == true)
                 .FirstOrDefaultAsync(m => m.PhotoID == id);
             if (photo == null)
             {
@@ -69,11 +73,13 @@ namespace WebApplication.Controllers
                 }
                 var formFile = fileInputData[0];
                 var readStream = formFile.OpenReadStream();
+                photo.Processed = false;
                 photo.PhotoData = new byte[formFile.Length];
                 readStream.Read(photo.PhotoData, 0, (int)formFile.Length);
                 photo.MimeType = formFile.ContentType;
                 _context.Add(photo);
                 await _context.SaveChangesAsync();
+                ServiceBusRepository.SendMesage(photo.PhotoID);
                 return RedirectToAction(nameof(Details), new { id = photo.PhotoID });
             }
             return View(photo);

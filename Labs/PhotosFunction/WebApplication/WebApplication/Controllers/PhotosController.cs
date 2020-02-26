@@ -20,7 +20,10 @@ namespace WebApplication.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Photos.ToListAsync());
+            return View(await _context
+                .Photos
+                .Where(x => x.Processed == true)
+                .ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -29,15 +32,28 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             var photo = await _context.Photos
                 .FirstOrDefaultAsync(m => m.PhotoID == id);
             if (photo == null)
             {
                 return NotFound();
             }
-
             return View(photo);
+        }
+
+        public async Task<IActionResult> File(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var photo = await _context.Photos
+                .FirstOrDefaultAsync(m => m.PhotoID == id);
+            if (photo == null)
+            {
+                return NotFound();
+            }
+            return File(photo.PhotoData, photo.MimeType);
         }
 
         public IActionResult Create()
@@ -56,29 +72,16 @@ namespace WebApplication.Controllers
                 }
                 var formFile = fileInputData[0];
                 var readStream = formFile.OpenReadStream();
-                var photoData = new byte[formFile.Length];
+                photo.Processed = false;
+                photo.PhotoData = new byte[formFile.Length];
+                readStream.Read(photo.PhotoData, 0, (int)formFile.Length);
+                photo.MimeType = formFile.ContentType;
                 _context.Add(photo);
                 await _context.SaveChangesAsync();
-                StorageRepository.UploadBlob("photos", photo.PhotoID.ToString(), photoData);
+                ServiceBusRepository.SendMesage(photo.PhotoID);
                 return RedirectToAction(nameof(Details), new { id = photo.PhotoID });
             }
             return View(photo);
-        }
-
-        public async Task<IActionResult> File(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var photo = await _context.Photos
-                .FirstOrDefaultAsync(m => m.PhotoID == id);
-            if (photo == null)
-            {
-                return NotFound();
-            }
-            var result = StorageRepository.DownloadBlob("photos", photo.PhotoID.ToString());
-            return File(result.Blob, result.ContentType);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -87,14 +90,12 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-
             var photo = await _context.Photos
                 .FirstOrDefaultAsync(m => m.PhotoID == id);
             if (photo == null)
             {
                 return NotFound();
             }
-
             return View(photo);
         }
 
