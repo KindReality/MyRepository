@@ -1,0 +1,11 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=aspnet-WebApplication;Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=saftstorage;AccountKey=NU2r+Mk/EiuQoAHVV8vUq+quy3XAzo5SnbamSFwHN9fQRThqXi22A8YUJAX3u9yDp7G/Ar6nfYSJX0eg/YY1Hw==;BlobEndpoint=https://saftstorage.blob.core.windows.net/;TableEndpoint=https://saftstorage.table.core.windows.net/;QueueEndpoint=https://saftstorage.queue.core.windows.net/;FileEndpoint=https://saftstorage.file.core.windows.net/",
+    "ServiceBusConnectionString": "Endpoint=sb://stsaftservicebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=seO+ntp4tbeFVtgoWeCN/KT2csU8HgO1h+DYM6JuJi4=",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+  }
+}
