@@ -57,6 +57,7 @@ namespace WebApplication.Controllers
                 var formFile = fileInputData[0];
                 var readStream = formFile.OpenReadStream();
                 var photoData = new byte[formFile.Length];
+                readStream.Read(photoData, 0, photoData.Length);
                 _context.Add(photo);
                 await _context.SaveChangesAsync();
                 StorageRepository.UploadBlob("photos", photo.PhotoID.ToString(), photoData);

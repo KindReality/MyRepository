@@ -13,7 +13,7 @@ namespace WebApplication.Data
     {
         private static BlobServiceClient GetBlobServiceClient()
         {
-            string connectionString = "DefaultEndpointsProtocol=https;AccountName=saftstorage;AccountKey=NU2r+Mk/EiuQoAHVV8vUq+quy3XAzo5SnbamSFwHN9fQRThqXi22A8YUJAX3u9yDp7G/Ar6nfYSJX0eg/YY1Hw==;EndpointSuffix=core.windows.net";
+            string connectionString = "DefaultEndpointsProtocol=https;AccountName=safttechnologies;AccountKey=NXimvJg1WKcXOPb1RBI0rcepKRyOzX23Yhq4GDYSt5wJrY/kKbfiyHblSc8RVnZfwstPEVe4DFMo9T/2FL4OLA==;EndpointSuffix=core.windows.net";
             BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
             return blobServiceClient;
         }
